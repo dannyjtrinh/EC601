@@ -6,7 +6,7 @@ But how does it work? Obtaining the two inputs from the user, tweets will be gra
 
 While this application is intended for companies and their products, this target could be interpreted in various always. As a result, the same user can obtain information from a popular movie reviewer and determine if many individuals like a movie that just came out. The possibilities for Flop or Not are endless!
 
-User Stories
+### User Stories
 
 -I as a user should be greeted with a simple and elegant interface
 
@@ -20,32 +20,32 @@ User Stories
 
 -I as a user should be able to save my results to a file
 
-Backlog
+### Backlog
 
--User interface to accept company name and product
+[ ] User interface to accept company name and product
 
--Feed user and product keyword to Twitter API
+[ ] Feed user and product keyword to Twitter API
 
--Arrange the data in a form that is easily digestible by the program/code
+[ ] Arrange the data in a form that is easily digestible by the program/code
 
--Come up with an algorithm to figure out the time period of the product
+[ ] Come up with an algorithm to figure out the time period of the product
 
--Obtain more tweets in the form of mentions and etc
+[ ] Obtain more tweets in the form of mentions and etc
 
--Have all that data in a form for the Google API to grab information about
+[ ] Have all that data in a form for the Google API to grab information about
 
--Grab sentiment information from the Google Natural Language API
+[ ] Grab sentiment information from the Google Natural Language API
 
--Determine if is a good product or not
+[ ] Determine if is a good product or not
 
--Find out the reason why for the sentiment score
+[ ] Find out the reason why for the sentiment score
 
--determine in a deeper level as to why the bad/good sentiment based on Google Cloud API information
+[ ] determine in a deeper level as to why the bad/good sentiment based on Google Cloud API information
 
--Aggregate all the information in a digestible format for the user
+[ ] Aggregate all the information in a digestible format for the user
 
--Display information on the user interface
+[ ] Display information on the user interface
 
--Display color spectrum based off the product rating
+[ ] Display color spectrum based off the product rating
 
--Use picture information in tweets to enhance sentiment info
+[ ] Use picture information in tweets to enhance sentiment info
