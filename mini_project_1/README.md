@@ -8,27 +8,27 @@ While this application is intended for companies and their products, this target
 
 User Stories
 
--I as a user should be greeted with a simple and elegant interface
--I as a user should be able to enter any Twitter handle and product
--I as a user should have a prompt when I have entered an invalid Twitter handle
--I as a user should be given the result of my product search if it was a hit or not
--I as a user should be given the detailed results of my product search, specifically, why it was scored the way it was.
--I as a user should be able to save my results to a file
+  -I as a user should be greeted with a simple and elegant interface
+  -I as a user should be able to enter any Twitter handle and product
+  -I as a user should have a prompt when I have entered an invalid Twitter handle
+  -I as a user should be given the result of my product search if it was a hit or not
+  -I as a user should be given the detailed results of my product search, specifically, why it was scored the way it was.
+  -I as a user should be able to save my results to a file
 
 Backlog
 
--User interface to accept company name and product
--Feed user and product keyword to Twitter API
--Arrange the data in a form that is easily digestible by the program/code
--Come up with an algorithm to figure out the time period of the product
--Obtain more tweets in the form of mentions and etc
--Have all that data in a form for the Google API to grab information about
--Grab sentiment information from the Google Natural Language API
--Determine if is a good product or not
--Find out the reason why for the sentiment score
--determine in a deeper level as to why the bad/good sentiment based on Google Cloud API information
--Aggregate all the information in a digestible format for the user
--Display information on the user interface
--Display color spectrum based off the product rating
--Use picture information in tweets to enhance sentiment info
+  -User interface to accept company name and product
+  -Feed user and product keyword to Twitter API
+  -Arrange the data in a form that is easily digestible by the program/code
+  -Come up with an algorithm to figure out the time period of the product
+  -Obtain more tweets in the form of mentions and etc
+  -Have all that data in a form for the Google API to grab information about
+  -Grab sentiment information from the Google Natural Language API
+  -Determine if is a good product or not
+  -Find out the reason why for the sentiment score
+  -determine in a deeper level as to why the bad/good sentiment based on Google Cloud API information
+  -Aggregate all the information in a digestible format for the user
+  -Display information on the user interface
+  -Display color spectrum based off the product rating
+  -Use picture information in tweets to enhance sentiment info
 
