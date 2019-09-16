@@ -6,7 +6,7 @@ But how does it work? Obtaining the two inputs from the user, tweets will be gra
 
 While this application is intended for companies and their products, this target could be interpreted in various always. As a result, the same user can obtain information from a popular movie reviewer and determine if many individuals like a movie that just came out. The possibilities for Flop or Not are endless!
 
-User Stories
+##User Stories
 
   -I as a user should be greeted with a simple and elegant interface
   -I as a user should be able to enter any Twitter handle and product
@@ -15,7 +15,7 @@ User Stories
   -I as a user should be given the detailed results of my product search, specifically, why it was scored the way it was.
   -I as a user should be able to save my results to a file
 
-Backlog
+##Backlog
 
   -User interface to accept company name and product
   -Feed user and product keyword to Twitter API
