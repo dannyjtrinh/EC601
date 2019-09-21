@@ -1,7 +1,11 @@
+import sys
 from ui import *
 
 
 def main():
-    gui = ui()
+    keys = sys.argv[1]
+    gui = ui(keys)
+    
+    
 
 main()

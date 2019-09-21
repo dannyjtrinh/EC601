@@ -21,7 +21,7 @@ def print_result(annotations):
     return 0
 
 
-def analyze(movie_review_filename):
+def analyze(sentence):
     """Run a sentiment analysis request on text within a passed filename."""
     client = language.LanguageServiceClient()
 
@@ -30,21 +30,9 @@ def analyze(movie_review_filename):
         content = review_file.read()
 
     document = types.Document(
-        content=content,
+        content=sentence,
         type=enums.Document.Type.PLAIN_TEXT)
     annotations = client.analyze_sentiment(document=document)
 
     # Print the results
     print_result(annotations)
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description=__doc__,
-        formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument(
-        'movie_review_filename',
-        help='The filename of the movie review you\'d like to analyze.')
-    args = parser.parse_args()
-
-    analyze(args.movie_review_filename)

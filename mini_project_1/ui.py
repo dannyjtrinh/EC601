@@ -4,12 +4,17 @@
 import sys
 import os
 import time
+from twitter_api import *
+from google_api import *
 from PyQt4.QtGui import *
 
 
 class ui():
 
-    def __init__(self):
+    def __init__(self, keys):
+        # Create Twitter scrapper class instance
+        self.twitter_scrapper = twitter_scrapper(keys)
+        
         # Create an PyQT4 application object.
         self.a = QApplication(sys.argv)
         
@@ -70,12 +75,26 @@ class ui():
     def on_analyze_click(self):
         username = str(self.username_textbox.text())
         product = str(self.product_textbox.text())
-        self.analyze_button.setEnabled(True)
+        self.analyze_button.setEnabled(False)
+        self.set_color(255, 255, 255)
         
-        self.set_color(220,20,60)
-        #self.set_color(255,165,0) #orange
-        #self.set_color(124,252,0) #green
-        #self.set_color(255, 255, 0) #yellow
+        tweet_sentence_block = \
+            self.twitter_scrapper.search_twitter(username, product)
+
+        score = analyze(tweet_sentence_block)
+ 
+        if (score == 0.0):
+            self.set_color(255, 255, 255)
+        elif(score <= -0.5):
+            self.set_color(220,20,60) #red
+        elif(score < 0):
+            self.set_color(255,165,0) #orange
+        elif(score <= 0.5):
+            self.set_color(255, 255, 0) #yellow
+        else:
+            self.set_color(124,252,0) #green
+
+        self.analyze_button.setEnabled(True)
   
     def set_color(self, x, y, z):
         self.gradient.setColorAt(0.0, QColor(int(x), int(x), int(x)))
