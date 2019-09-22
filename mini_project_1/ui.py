@@ -4,6 +4,7 @@
 import sys
 import os
 import time
+import threading
 from twitter_api import *
 from google_api import *
 from PyQt4.QtGui import *
@@ -56,6 +57,15 @@ class ui():
         label.setPixmap(pixmap)
         label.move(50,105)
 
+        # Place progress spinner icon
+        label = QLabel(self.w)
+        label.resize(70,50)
+        self.progress_spinner = \
+            QMovie(os.getcwd() + '/ui_elements/ajax-loader-static.gif')
+        label.setMovie(self.progress_spinner)
+        label.move(250, 200)
+        self.progress_spinner.start()
+
     def setup_textbox_and_buttons(self):
         # Create Twitter username textbox
         self.username_textbox = QLineEdit(self.w)
@@ -71,20 +81,28 @@ class ui():
         self.analyze_button = QPushButton('Analyze', self.w)
         self.analyze_button.move(125,175)
         self.analyze_button.clicked.connect(self.on_analyze_click)
-
+        
     def on_analyze_click(self):
+        self.analyze_button.setEnabled(False)
+        x = threading.Thread(target=self.analysis_cmds)
+        self.set_color(255, 255, 255)
+        self.progress_spinner.stop()
+        self.progress_spinner.setFileName(\
+                            os.getcwd() + '/ui_elements/ajax-loader.gif')
+        self.progress_spinner.start()
+        x.start()
+
+    def analysis_cmds(self):
         username = str(self.username_textbox.text())
         product = str(self.product_textbox.text())
-        self.analyze_button.setEnabled(False)
-        self.set_color(255, 255, 255)
         
         tweet_sentence_block = \
             self.twitter_scrapper.search_twitter(username, product)
 
         score = analyze(tweet_sentence_block)
- 
+        
         if (score == 0.0):
-            self.set_color(255, 255, 255)
+            self.set_color(255, 255, 255) #white
         elif(score <= -0.5):
             self.set_color(220,20,60) #red
         elif(score < 0):
@@ -95,7 +113,8 @@ class ui():
             self.set_color(124,252,0) #green
 
         self.analyze_button.setEnabled(True)
-  
+        self.progress_spinner.stop()
+        
     def set_color(self, x, y, z):
         self.gradient.setColorAt(0.0, QColor(int(x), int(x), int(x)))
         self.gradient.setColorAt(1.0, QColor(int(x), int(y), int(z)))
