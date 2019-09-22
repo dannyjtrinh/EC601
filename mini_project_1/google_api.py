@@ -1,23 +1,24 @@
-import argparse
-
 from google.cloud import language
 from google.cloud.language import enums
-from google.cloud.language import types
-from google.cloud import language_v1
-from google.cloud.language_v1 import enums
 
 
 def analyze(sentence_list):
-    text_block = ""
-
+    score_list = []
+    neg_list = []
+    pos_list = []
+    sent_list = []
+    tweet_list = []
+    
     for i in sentence_list:
         if(i.count("https://") == 1):
-            #print(i+"\n\n")
-            text_block = text_block + i + "\n"
+            url = i.find("https")
+            tweet = i[:url-1].strip()
+            url_link = i[url:].strip()
+            tweet_list.append((tweet, url_link))
+
+    tweet_list = remove_dups(tweet_list)
     
-    text_content = text_block
-    
-    client = language_v1.LanguageServiceClient()
+    client = language.LanguageServiceClient()
 
     # Available types: PLAIN_TEXT, HTML
     type_ = enums.Document.Type.HTML
@@ -25,13 +26,25 @@ def analyze(sentence_list):
     # Optional. If not specified, the language is automatically detected.
     # For list of supported languages:
     # https://cloud.google.com/natural-language/docs/languages
-    language = "en"
-    document = {"content": text_content, "type": type_, "language": language}
-
+    #language = "en"
+    
     # Available values: NONE, UTF8, UTF16, UTF32
     encoding_type = enums.EncodingType.UTF8
 
-    response = client.analyze_sentiment(document, encoding_type=encoding_type)
+    for tweet in tweet_list:
+        document = {"content": tweet[0], "type": type_}
+        response = client.analyze_sentiment(document, encoding_type=encoding_type)
+
+        score = float(response.document_sentiment.score)
+        if(score != 0.0):
+            score_list.append(score)
+            sent_list.append(tweet[0]+tweet[1])
+            
+            if(score < 0.0):
+                neg_list.append(score)
+            else:
+                pos_list.append(score)
+        
     # Get overall sentiment of the input document
     #print(u"Document sentiment score: {}".format(response.document_sentiment.score))
     #print(
@@ -40,32 +53,38 @@ def analyze(sentence_list):
     #    )
     #)
     # Get sentiment for all sentences in the document
-    summ = 0
-    num = 0
-    score_list = []
-    sent_list = []
-    
-    for sentence in response.sentences:
-        #print(u"Sentence text: {}".format(sentence.text.content))
-        #print(u"Sentence sentiment score: {}".format(sentence.sentiment.score))
-        if(float(sentence.sentiment.score) != 0.0):
-            score_list.append(float(sentence.sentiment.score))
-            sent_list.append(sentence.text.content)
-            summ = summ + float(sentence.sentiment.score)
-            num = num + 1
+
+    # for sentence in response.sentences:
+    #     #print(u"Sentence text: {}".format(sentence.text.content))
+    #     #print(u"Sentence sentiment score: {}".format(sentence.sentiment.score))
+            
         #print(u"Sentence sentiment magnitude: {}".format(sentence.sentiment.magnitude))
 
+    
     # Get the language of the text, which will be the same as
     # the language specified in the request or, if not specified,
     # the automatically-detected language.
     #print(u"Language of the text: {}".format(response.language))
-    #print("the summ is %f and number of sentences  %f" % (summ, num))
     sorted_list = sorted(zip(score_list, sent_list), reverse=True)
     top_tweets = sorted_list[:3] + sorted_list[-3:]
 
     try:
-        avg = summ/num
+        neg_avg = sum(neg_list)/len(neg_list)
+        pos_avg = sum(pos_list)/len(pos_list)
+        avg = (neg_avg+pos_avg)/2.0
     except:
         avg = 0
         
     return avg, top_tweets
+
+def remove_dups(tweet_list): 
+    new_list = [] 
+    for tweet in tweet_list:
+        dup = False
+        for new_list_tweet in new_list:
+            if new_list_tweet[0][0:14] == tweet[0][0:14]:
+                dup = True
+        if(dup == False):        
+            new_list.append((tweet[0], tweet[1]))
+
+    return new_list 

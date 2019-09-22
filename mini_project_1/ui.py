@@ -97,7 +97,7 @@ class ui():
         self.analyze_button.clicked.connect(self.on_analyze_click)
 
         # Place Results Textbox
-        self.results_text = QPlainTextEdit(self.result_ui)
+        self.results_text = QTextEdit(self.result_ui)
         self.results_text.resize(300,300)
         self.results_text.setReadOnly(True)
         
@@ -148,7 +148,8 @@ class ui():
         else:
             self.set_color(124,252,0) #green
             
-        self.results_text.insertPlainText(results_string)
+        self.results_text.insertPlainText(results_string+"\n\nScore: "+
+                                          str(score)+"\n")
         self.analyze_button.setEnabled(True)
         self.progress_spinner.stop()
         

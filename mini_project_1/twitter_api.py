@@ -14,35 +14,49 @@ class twitter_scrapper():
         self.api = tweepy.API(auth)
 
     def search_twitter(self, username, product):
-        retweet_filter='-filter:retweets'
-        search_words = "#"+product+retweet_filter
+        filt='-filter:retweets'
         tweet_list = []
-        
-        # Collect tweets based on product only
-        tweets = tweepy.Cursor(self.api.search,
-                               q=search_words,
-                               lang="en",
-                               since=None).items(500)
 
-        # Filter tweets
-        for tweet in tweets:
-            filt = "".join(tweet.text.lower().split())
-            if(filt.find("".join(product.lower().split())) != -1):
-                tweet_list.append(tweet.text)
+        if(product != ""):
+            search_words = "#"+product+filt
+
+            # Collect tweets based on product only
+            tweets = tweepy.Cursor(self.api.search,
+                                   q=search_words,
+                                   lang="en",
+                                   since=None).items(250)
+
+            # Filter tweets
+            for tweet in tweets:
+                tweet_proc = "".join(tweet.text.lower().split())
+                if(tweet_proc.find("".join(product.lower().split())) != -1):
+                    if(self.spam_checker(tweet_proc) == False):
+                        tweet_list.append(tweet.text)
 
         # Collect tweets from username
-        search_words = "@"+username+retweet_filter
-
-        tweets = tweepy.Cursor(self.api.search,
-                               q=search_words,
-                               lang="en",
-                               since=None).items(1000)
-         
-        for tweet in tweets:
-            filt = "".join(tweet.text.lower().split())
-            if(filt.find("".join(product.lower().split())) != -1):
-                tweet_list.append(tweet.text)
+        if(username != ""):
+            search_words = "@"+username+filt
         
+            tweets = tweepy.Cursor(self.api.search,
+                                   q=search_words,
+                                   lang="en",
+                                   since=None).items(500)
+
+            for tweet in tweets:
+                tweet_proc = "".join(tweet.text.lower().split())
+                
+                if(tweet_proc.find("".join(product.lower().split())) != -1):
+                    if(self.spam_checker(tweet_proc) == False):
+                        tweet_list.append(tweet.text)
+                        
         return tweet_list
 
-    
+    def spam_checker(self, string):
+        spam_keywords = ["sweepstakes", "contest", "ebay", "sale", "http/1.1",
+                         "giveaway", "case", "bestbuy", "walmart", "unlocked",
+                         "factory"]
+        for word in spam_keywords:
+            if(string.find(word) != -1):
+                return True
+
+        return False
