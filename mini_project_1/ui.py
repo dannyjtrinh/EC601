@@ -131,7 +131,7 @@ class ui():
             top_tweets[4][1]+"\n\n"+\
             top_tweets[5][1]
 
-        return score, str(results_string.encode('utf-8'))
+        return score, results_string
 
     def post_results(self, score, results_string):
         if (score == 0.0):
