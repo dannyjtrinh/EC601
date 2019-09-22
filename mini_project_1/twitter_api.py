@@ -22,7 +22,7 @@ class twitter_scrapper():
         tweets = tweepy.Cursor(self.api.search,
                                q=search_words,
                                lang="en",
-                               since=date_since).items(250)
+                               since=date_since).items(400)
 
         tweet_list = []
         # Iterate and print tweets

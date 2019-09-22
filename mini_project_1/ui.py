@@ -1,26 +1,39 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-#
 import sys
 import os
 import time
-import threading
 from twitter_api import *
 from google_api import *
 from PyQt4.QtGui import *
+from PyQt4.QtCore import *
 
+            
+
+class result_ui(QMainWindow):
+    
+    def __init__(self, parent=None):
+        super(result_ui, self).__init__(parent)
+        
 
 class ui():
 
     def __init__(self, keys):
+        self.thread = AThread(self.analysis_cmds)
+        
         # Create Twitter scrapper class instance
         self.twitter_scrapper = twitter_scrapper(keys)
         
         # Create an PyQT4 application object.
         self.a = QApplication(sys.argv)
+
+        # Create Results UI
+        self.result_ui = result_ui()
+        self.result_ui.setWindowTitle("Results")
+        self.result_ui.setGeometry(1200, 300, 100, 50)
+        self.result_ui.resize(300, 300)
         
         # The QWidget widget is the base class of all user interface objects in PyQt4.
         self.w = QWidget()
+        self.w.connect(self.thread, self.thread.signal, self.post_results)
         
         # Set window size.
         self.w.resize(320, 240)
@@ -36,6 +49,7 @@ class ui():
         
         # Show window
         self.w.show()
+        self.result_ui.show()
 
         # Setup gradient and palette for window color
         self.gradient = QLinearGradient(0, 0, 0, 400)
@@ -81,26 +95,45 @@ class ui():
         self.analyze_button = QPushButton('Analyze', self.w)
         self.analyze_button.move(125,175)
         self.analyze_button.clicked.connect(self.on_analyze_click)
+
+        # Place Results Textbox
+        self.results_text = QPlainTextEdit(self.result_ui)
+        self.results_text.resize(300,300)
+        self.results_text.setReadOnly(True)
         
     def on_analyze_click(self):
+        self.results_text.clear()
         self.analyze_button.setEnabled(False)
-        x = threading.Thread(target=self.analysis_cmds)
         self.set_color(255, 255, 255)
         self.progress_spinner.stop()
         self.progress_spinner.setFileName(\
                             os.getcwd() + '/ui_elements/ajax-loader.gif')
         self.progress_spinner.start()
-        x.start()
+        
+        self.thread.start()
 
-    def analysis_cmds(self):
+    def analysis_cmds(self):       
         username = str(self.username_textbox.text())
         product = str(self.product_textbox.text())
         
         tweet_sentence_block = \
             self.twitter_scrapper.search_twitter(username, product)
 
-        score = analyze(tweet_sentence_block)
+        score, top_tweets = analyze(tweet_sentence_block)
+        #self.score = 0
+        #self.results_string = ""
         
+        results_string = "Top Tweets\n\n"+top_tweets[0][1]+"\n\n"+\
+            top_tweets[1][1]+"\n\n"+\
+            top_tweets[2][1]+"\n\n"+\
+            "Worst Tweets"+"\n\n"+\
+            top_tweets[3][1]+"\n\n"+\
+            top_tweets[4][1]+"\n\n"+\
+            top_tweets[5][1]
+
+        return score, str(results_string.encode('utf-8'))
+
+    def post_results(self, score, results_string):
         if (score == 0.0):
             self.set_color(255, 255, 255) #white
         elif(score <= -0.5):
@@ -111,7 +144,8 @@ class ui():
             self.set_color(255, 255, 0) #yellow
         else:
             self.set_color(124,252,0) #green
-
+            
+        self.results_text.insertPlainText(results_string)
         self.analyze_button.setEnabled(True)
         self.progress_spinner.stop()
         
@@ -121,3 +155,14 @@ class ui():
         self.p.setBrush(QPalette.Window, QBrush(self.gradient))
         self.w.setPalette(self.p)
 
+
+class AThread(QThread):
+
+    def __init__(self, function, parent=None):
+        super(AThread, self).__init__(parent)
+        self.function = function
+        self.signal = SIGNAL("signal")
+    
+    def run(self):
+        value, result_string = self.function()
+        self.emit(self.signal, value, result_string)
