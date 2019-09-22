@@ -1,5 +1,4 @@
 import tweepy
-import sys
 
 
 class twitter_scrapper():
@@ -15,20 +14,35 @@ class twitter_scrapper():
         self.api = tweepy.API(auth)
 
     def search_twitter(self, username, product):
-        search_words = "#"+product
-        date_since = "2018-1-1"
+        retweet_filter='-filter:retweets'
+        search_words = "#"+product+retweet_filter
+        tweet_list = []
         
-        # Collect tweets
+        # Collect tweets based on product only
         tweets = tweepy.Cursor(self.api.search,
                                q=search_words,
                                lang="en",
-                               since=date_since).items(400)
+                               since=None).items(500)
 
-        tweet_list = []
-        # Iterate and print tweets
+        # Filter tweets
         for tweet in tweets:
-            tweet_list.append(tweet.text)
+            filt = "".join(tweet.text.lower().split())
+            if(filt.find("".join(product.lower().split())) != -1):
+                tweet_list.append(tweet.text)
 
+        # Collect tweets from username
+        search_words = "@"+username+retweet_filter
+
+        tweets = tweepy.Cursor(self.api.search,
+                               q=search_words,
+                               lang="en",
+                               since=None).items(1000)
+         
+        for tweet in tweets:
+            filt = "".join(tweet.text.lower().split())
+            if(filt.find("".join(product.lower().split())) != -1):
+                tweet_list.append(tweet.text)
+        
         return tweet_list
 
     

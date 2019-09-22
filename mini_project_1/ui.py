@@ -129,7 +129,8 @@ class ui():
                 top_tweets[3][1]+"\n\n"+\
                 top_tweets[4][1]+"\n\n"+\
                 top_tweets[5][1]
-        except:
+        except Exception as e:
+            print e
             score = 0
             results_string = ""
 

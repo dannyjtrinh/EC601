@@ -12,7 +12,7 @@ def analyze(sentence_list):
 
     for i in sentence_list:
         if(i.count("https://") == 1):
-            print(i+"\n\n")
+            #print(i+"\n\n")
             text_block = text_block + i + "\n"
     
     text_content = text_block
