@@ -115,21 +115,23 @@ class ui():
     def analysis_cmds(self):       
         username = str(self.username_textbox.text())
         product = str(self.product_textbox.text())
-        
-        tweet_sentence_block = \
-            self.twitter_scrapper.search_twitter(username, product)
 
-        score, top_tweets = analyze(tweet_sentence_block)
-        #self.score = 0
-        #self.results_string = ""
-        
-        results_string = "Top Tweets\n\n"+top_tweets[0][1]+"\n\n"+\
-            top_tweets[1][1]+"\n\n"+\
-            top_tweets[2][1]+"\n\n"+\
-            "Worst Tweets"+"\n\n"+\
-            top_tweets[3][1]+"\n\n"+\
-            top_tweets[4][1]+"\n\n"+\
-            top_tweets[5][1]
+        try:
+            tweet_sentence_block = \
+                self.twitter_scrapper.search_twitter(username, product)
+            
+            score, top_tweets = analyze(tweet_sentence_block)
+
+            results_string = "Top Tweets\n\n"+top_tweets[0][1]+"\n\n"+\
+                top_tweets[1][1]+"\n\n"+\
+                top_tweets[2][1]+"\n\n"+\
+                "Worst Tweets"+"\n\n"+\
+                top_tweets[3][1]+"\n\n"+\
+                top_tweets[4][1]+"\n\n"+\
+                top_tweets[5][1]
+        except:
+            score = 0
+            results_string = ""
 
         return score, results_string
 
