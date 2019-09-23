@@ -139,11 +139,11 @@ class ui():
     def post_results(self, score, results_string):
         if (score == 0.0):
             self.set_color(255, 255, 255) #white
-        elif(score <= -0.5):
+        elif(score <= -0.3):
             self.set_color(220,20,60) #red
         elif(score < 0):
             self.set_color(255,165,0) #orange
-        elif(score <= 0.5):
+        elif(score <= 0.3):
             self.set_color(255, 255, 0) #yellow
         else:
             self.set_color(124,252,0) #green

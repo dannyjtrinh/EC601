@@ -12,6 +12,7 @@ def analyze(sentence_list):
     for i in sentence_list:
         if(i.count("https://") == 1):
             url = i.find("https")
+            #print(i+"\n\n")
             tweet = i[:url-1].strip()
             url_link = i[url:].strip()
             tweet_list.append((tweet, url_link))
@@ -71,7 +72,8 @@ def analyze(sentence_list):
     try:
         neg_avg = sum(neg_list)/len(neg_list)
         pos_avg = sum(pos_list)/len(pos_list)
-        avg = (neg_avg+pos_avg)/2.0
+        #avg = (neg_avg+pos_avg)/2.0 #experimenting with averages
+        avg = sum(score_list)/len(score_list)
     except:
         avg = 0
         

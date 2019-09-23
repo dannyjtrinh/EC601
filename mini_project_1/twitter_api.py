@@ -24,12 +24,13 @@ class twitter_scrapper():
             tweets = tweepy.Cursor(self.api.search,
                                    q=search_words,
                                    lang="en",
-                                   since=None).items(250)
+                                   since=None).items(300)
 
             # Filter tweets
             for tweet in tweets:
                 tweet_proc = "".join(tweet.text.lower().split())
-                if(tweet_proc.find("".join(product.lower().split())) != -1):
+                if(tweet_proc.find(
+                        "".join(product.lower().split())) != -1):
                     if(self.spam_checker(tweet_proc) == False):
                         tweet_list.append(tweet.text)
 
@@ -40,12 +41,12 @@ class twitter_scrapper():
             tweets = tweepy.Cursor(self.api.search,
                                    q=search_words,
                                    lang="en",
-                                   since=None).items(500)
+                                   since=None).items(300)
 
             for tweet in tweets:
                 tweet_proc = "".join(tweet.text.lower().split())
-                
-                if(tweet_proc.find("".join(product.lower().split())) != -1):
+                if(tweet_proc.find(
+                        "".join(product.lower().split())) != -1):
                     if(self.spam_checker(tweet_proc) == False):
                         tweet_list.append(tweet.text)
                         
@@ -54,7 +55,7 @@ class twitter_scrapper():
     def spam_checker(self, string):
         spam_keywords = ["sweepstakes", "contest", "ebay", "sale", "http/1.1",
                          "giveaway", "case", "bestbuy", "walmart", "unlocked",
-                         "factory"]
+                         "factory", "buynow", "call:", "call"]
         for word in spam_keywords:
             if(string.find(word) != -1):
                 return True
