@@ -1,3 +1,4 @@
+import re
 from google.cloud import language
 from google.cloud.language import enums
 
@@ -15,9 +16,11 @@ def analyze(sentence_list):
             #print(i+"\n\n")
             tweet = i[:url-1].strip()
             url_link = i[url:].strip()
-            tweet_list.append((tweet, url_link))
+            if(len(url_link.split()) == 1):
+                tweet_list.append((tweet, url_link))
 
     tweet_list = remove_dups(tweet_list)
+    tweet_list_filt = filter_tweets(tweet_list)
     
     client = language.LanguageServiceClient()
 
@@ -32,14 +35,14 @@ def analyze(sentence_list):
     # Available values: NONE, UTF8, UTF16, UTF32
     encoding_type = enums.EncodingType.UTF8
 
-    for tweet in tweet_list:
+    for i, tweet in enumerate(tweet_list_filt):
         document = {"content": tweet[0], "type": type_}
         response = client.analyze_sentiment(document, encoding_type=encoding_type)
 
         score = float(response.document_sentiment.score)
         if(score != 0.0):
             score_list.append(score)
-            sent_list.append(tweet[0]+tweet[1])
+            sent_list.append(tweet_list[i][0]+"\n"+tweet[1].split()[0])
             
             if(score < 0.0):
                 neg_list.append(score)
@@ -90,3 +93,12 @@ def remove_dups(tweet_list):
             new_list.append((tweet[0], tweet[1]))
 
     return new_list 
+
+def filter_tweets(tweet_list):
+    filt_list = []
+    for tweet in tweet_list:
+        filt_list.append((' '.join(\
+            re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ",\
+                   tweet[0]).split()), tweet[1]))
+
+    return filt_list
