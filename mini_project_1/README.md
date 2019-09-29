@@ -22,30 +22,30 @@ While this application is intended for companies and their products, this target
 
 ### Backlog
 
-[ ] User interface to accept company name and product
+[X] User interface to accept company name and product
 
-[ ] Feed user and product keyword to Twitter API
+[X] Feed user and product keyword to Twitter API
 
-[ ] Arrange the data in a form that is easily digestible by the program/code
+[X] Arrange the data in a form that is easily digestible by the program/code
 
-[ ] Come up with an algorithm to figure out the time period of the product
+[X] Come up with an algorithm to figure out the time period of the product
 
-[ ] Obtain more tweets in the form of mentions and etc
+[X] Obtain more tweets in the form of mentions and etc
 
-[ ] Have all that data in a form for the Google API to grab information about
+[X] Have all that data in a form for the Google API to grab information about
 
-[ ] Grab sentiment information from the Google Natural Language API
+[X] Grab sentiment information from the Google Natural Language API
 
-[ ] Determine if is a good product or not
+[X] Determine if is a good product or not
 
-[ ] Find out the reason why for the sentiment score
+[X] Find out the reason why for the sentiment score
 
-[ ] determine in a deeper level as to why the bad/good sentiment based on Google Cloud API information
+[X] determine in a deeper level as to why the bad/good sentiment based on Google Cloud API information
 
-[ ] Aggregate all the information in a digestible format for the user
+[X] Aggregate all the information in a digestible format for the user
 
-[ ] Display information on the user interface
+[X] Display information on the user interface
 
-[ ] Display color spectrum based off the product rating
+[X] Display color spectrum based off the product rating
 
 [ ] Use picture information in tweets to enhance sentiment info
