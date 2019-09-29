@@ -6,6 +6,10 @@ But how does it work? Obtaining the two inputs from the user, tweets will be gra
 
 While this application is intended for companies and their products, this target could be interpreted in various always. As a result, the same user can obtain information from a popular movie reviewer and determine if many individuals like a movie that just came out. The possibilities for Flop or Not are endless!
 
+# Architecture
+
+<img src="https://github.com/djtrinh/EC601/blob/master/mini_project_1/docs/Flop%20or%20Not%20Arch.PNG">
+
 # How to Run?
 This application requires PYQT4, Tweepy, Google Natural Language API and Python 2
 
@@ -13,11 +17,13 @@ This application requires PYQT4, Tweepy, Google Natural Language API and Python 
 
 Please make sure all APIs have been installed before running the program. To run the program, run the script called run.sh. Twitter key paths must be specified in the run.sh. The file should be of the following format:
 
+```python
 [auth]
 consumer_key = ****
 consumer_secret = ****
 access_token = ****
 access_secret = ****
+```
 
 ### User Stories
 
@@ -62,3 +68,11 @@ access_secret = ****
 [X] Display color spectrum based off the product rating
 
 [ ] Use picture information in tweets to enhance sentiment info
+
+## Lessons Learned
+
+With this project, I have learned that are tons of information out there. As a result of this there is a ton of bad information as well. Filtering out this information is key to getting accurate results. Creating the GUI is both fun and frustrating at the same time. NLP was where all the fun really happend but there were too many limits with the free Twitter developer account.
+
+What I could have done better was actually have someone look into a database for this project. As a one man team, creating a GUI, integrating both Google Natural Language and Twitter APIs along with data preprocessing, there was a mountain of work to be done with so little time.
+
+In the future, I will modularize my code better. It has to start from the beginning and that includes good directory structures, code skeletans, etc.
