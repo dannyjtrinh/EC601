@@ -21,7 +21,7 @@ def analyze(sentence_list):
 
     tweet_list = remove_dups(tweet_list)
     tweet_list_filt = filter_tweets(tweet_list)
-    
+
     client = language.LanguageServiceClient()
 
     # Available types: PLAIN_TEXT, HTML
@@ -75,8 +75,8 @@ def analyze(sentence_list):
     try:
         neg_avg = sum(neg_list)/len(neg_list)
         pos_avg = sum(pos_list)/len(pos_list)
-        #avg = (neg_avg+pos_avg)/2.0 #experimenting with averages
-        avg = sum(score_list)/len(score_list)
+        avg = (neg_avg+pos_avg)/2.0 #experimenting with averages
+        #avg = sum(score_list)/len(score_list)
     except:
         avg = 0
         
