@@ -6,6 +6,11 @@ But how does it work? Obtaining the two inputs from the user, tweets will be gra
 
 While this application is intended for companies and their products, this target could be interpreted in various always. As a result, the same user can obtain information from a popular movie reviewer and determine if many individuals like a movie that just came out. The possibilities for Flop or Not are endless!
 
+# How to Run?
+This application requires PYQT4, Tweepy, Google Natural Language API and Python 2
+
+Please make sure all APIs have been installed before running the program. To run the program, run the script called run.sh.
+
 ### User Stories
 
 -I as a user should be greeted with a simple and elegant interface
