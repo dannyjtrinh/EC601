@@ -20,37 +20,44 @@ class twitter_scrapper():
         tweet_list = []
 
         if(product != ""):
-            search_words = "#"+product+filt
-
             # Collect tweets based on product only
-            tweets = tweepy.Cursor(self.api.search,
-                                   q=search_words,
-                                   lang="en",
-                                   since=None).items(300)
-
-            # Filter tweets
-            for tweet in tweets:
+            i = 0
+            for tweet in tweepy.Cursor(self.api.search,
+                                       q=product,
+                                       count=100,
+                                       result_type="recent",
+                                       include_entities=True,
+                                       lang="en").items():
+                i = i + 1
+                                
                 tweet_proc = "".join(tweet.text.lower().split())
                 if(tweet_proc.find(
                         "".join(product.lower().split())) != -1):
                     if(self.spam_checker(tweet_proc) == False):
                         tweet_list.append(tweet.text)
+                if i == 1500:
+                    break
 
         # Collect tweets from username
         if(username != ""):
             search_words = "@"+username+filt
-        
-            tweets = tweepy.Cursor(self.api.search,
-                                   q=search_words,
-                                   lang="en",
-                                   since=None).items(300)
 
-            for tweet in tweets:
+            i = 0
+            for tweet in tweepy.Cursor(self.api.search,
+                                       q=search_words,
+                                       count=100,
+                                       result_type="recent",
+                                       include_entities=True,
+                                       lang="en").items():
+                i = i + 1
                 tweet_proc = "".join(tweet.text.lower().split())
                 if(tweet_proc.find(
                         "".join(product.lower().split())) != -1):
                     if(self.spam_checker(tweet_proc) == False):
                         tweet_list.append(tweet.text)
+
+                if i == 1500:
+                    break
                         
         return tweet_list
 

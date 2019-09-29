@@ -11,16 +11,16 @@ def analyze(sentence_list):
     tweet_list = []
     
     for i in sentence_list:
-        if(i.count("https://") == 1):
-            url = i.find("https")
+        #if(i.count("https://") == 1):
+        url = i.find("https")
             #print(i+"\n\n")
-            tweet = i[:url-1].strip()
-            url_link = i[url:].strip()
-            if(len(url_link.split()) == 1):
-                tweet_list.append((tweet, url_link))
+        tweet = i# i[:url-1].strip()
+        url_link = i[url:].strip()
+            #if(len(url_link.split()) == 1):
+        tweet_list.append((tweet, url_link))
 
-    tweet_list = remove_dups(tweet_list)
-    tweet_list_filt = filter_tweets(tweet_list)
+    #tweet_list = remove_dups(tweet_list)
+    tweet_list_filt = tweet_list#filter_tweets(tweet_list)
     
     client = language.LanguageServiceClient()
 
@@ -35,8 +35,11 @@ def analyze(sentence_list):
     # Available values: NONE, UTF8, UTF16, UTF32
     encoding_type = enums.EncodingType.UTF8
 
+    count = 0
     for i, tweet in enumerate(tweet_list_filt):
-        document = {"content": tweet[0], "language": "en", "type": type_}
+        #print i
+        count = count+1
+        document = {"content": tweet[0], "language": "EN", "type": type_}
         response = client.analyze_sentiment(document, encoding_type=encoding_type)
 
         score = float(response.document_sentiment.score)
@@ -80,7 +83,7 @@ def analyze(sentence_list):
     except:
         avg = 0
         
-    return avg, top_tweets
+    return avg, top_tweets, sorted_list
 
 def remove_dups(tweet_list): 
     new_list = [] 
