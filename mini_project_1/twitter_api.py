@@ -1,15 +1,17 @@
 import tweepy
+import ConfigParser
 
 
 class twitter_scrapper():
 
     def __init__(self, path):
-        f = open(path)
-        key_list = f.readlines()
-        f.close()
+        config = ConfigParser.ConfigParser()
+        config.read(path)
         
-        auth = tweepy.OAuthHandler(key_list[0].strip(), key_list[1].strip())
-        auth.set_access_token(key_list[2].strip(), key_list[3].strip())
+        auth = tweepy.OAuthHandler(config.get('auth','consumer_key').strip(),
+                                   config.get('auth','consumer_secret').strip())
+        auth.set_access_token(config.get('auth','access_token').strip(),
+                              config.get('auth','access_secret').strip())
         
         self.api = tweepy.API(auth)
 

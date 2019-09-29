@@ -9,7 +9,15 @@ While this application is intended for companies and their products, this target
 # How to Run?
 This application requires PYQT4, Tweepy, Google Natural Language API and Python 2
 
-Please make sure all APIs have been installed before running the program. To run the program, run the script called run.sh.
+
+
+Please make sure all APIs have been installed before running the program. To run the program, run the script called run.sh. Twitter key paths must be specified in the run.sh. The file should be of the following format:
+
+[auth]
+consumer_key = ****
+consumer_secret = ****
+access_token = ****
+access_secret = ****
 
 ### User Stories
 
