@@ -27,6 +27,11 @@ class ui(QMainWindow):
         self.about_ui = QDialog()
         self.about_ui.setWindowTitle("About")
         self.about_ui.resize(500, 325)
+
+        # Notice ui
+        self.notice_ui = QDialog()
+        self.notice_ui.setWindowTitle("Notice")
+        self.notice_ui.resize(400, 100)
         
         # The QWidget widget is the base class of all user interface objects in PyQt4.
         self.w = self
@@ -61,13 +66,17 @@ class ui(QMainWindow):
         label.move(50,40)
         label.resize(70,70)
 
+        label = QLabel(self.notice_ui)
+        label.setText("Results will be more accurate with username filled")
+        label.move(50,50)
+        
         label = QLabel(self.about_ui)
         label.setText("Created by Danny Trinh")
         label.move(175,100)
 
         label = QLabel(self.about_ui)
         label.setText("Powered By:")
-        label.move(200,150)
+        label.move(200,200)
 
         label = QLabel(self.about_ui)
         pixmap = QPixmap(os.getcwd() + '/ui_elements/twitter_api_scaled.png')
@@ -146,10 +155,14 @@ class ui(QMainWindow):
                             os.getcwd() + '/ui_elements/ajax-loader.gif')
         self.progress_spinner.start()
         
+        username = str(self.username_textbox.text())
+        if(username == ""):
+            self.notice_ui.show()
+            
         self.thread.start()
 
     def analysis_cmds(self):       
-        username = str(self.username_textbox.text())
+        username = str(self.username_textbox.text())            
         product = str(self.product_textbox.text())
 
         try:
@@ -175,11 +188,11 @@ class ui(QMainWindow):
     def post_results(self, score, results_string):
         if (score == 0.0):
             self.set_color(255, 255, 255) #white
-        elif(score <= -0.3):
+        elif(score <= -0.2):
             self.set_color(220,20,60) #red
         elif(score < 0):
             self.set_color(255,165,0) #orange
-        elif(score <= 0.3):
+        elif(score <= 0.2):
             self.set_color(255, 255, 0) #yellow
         else:
             self.set_color(124,252,0) #green
@@ -198,6 +211,8 @@ class ui(QMainWindow):
 
     def closeEvent(self, event):
         self.result_ui.hide()
+        self.notice_ui.hide()
+        self.about_ui.hide()
 
         
 class AThread(QThread):
