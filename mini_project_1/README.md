@@ -90,3 +90,5 @@ With this project, I have learned that are tons of information out there. As a r
 What I could have done better was actually have someone look into a database for this project. As a one man team, creating a GUI, integrating both Google Natural Language and Twitter APIs along with data preprocessing, there was a mountain of work to be done with so little time. I also wanted to create a better spam filter. This would require machine learning to predict whether or not the tweet is spam instead of removing tweets based off spam keywords. Also, instead of discarding tweets with images, I want to do image processing to further improve tweet and sentiment score results.
 
 In the future, I will modularize my code better. It has to start from the beginning and that includes good directory structures, code skeletans, etc.
+
+MVP: Coffee
