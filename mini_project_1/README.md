@@ -25,7 +25,7 @@ access_token = ****
 access_secret = ****
 ```
 
-### User Stories
+# User Stories
 
 -I as a user should be greeted with a simple and elegant interface
 
@@ -39,7 +39,7 @@ access_secret = ****
 
 -I as a user should be able to save my results to a file
 
-### Backlog
+# Backlog
 
 [X] User interface to accept company name and product
 
@@ -69,10 +69,24 @@ access_secret = ****
 
 [ ] Use picture information in tweets to enhance sentiment info
 
-## Lessons Learned
+# Testing
 
-With this project, I have learned that are tons of information out there. As a result of this there is a ton of bad information as well. Filtering out this information is key to getting accurate results. Creating the GUI is both fun and frustrating at the same time. NLP was where all the fun really happend but there were too many limits with the free Twitter developer account.
+The user experience is key for this application. As a result, the user must be able to enter a Twitter account and product name. Their top tweets and worst tweets must be listed in the results window along with the average sentiment score. The color of the UI also changes with respect to the sentiment score. Green indicates a great product, yellow good, orange mediocre, and red is a flop.
 
-What I could have done better was actually have someone look into a database for this project. As a one man team, creating a GUI, integrating both Google Natural Language and Twitter APIs along with data preprocessing, there was a mountain of work to be done with so little time.
+<img src="https://github.com/djtrinh/EC601/blob/master/mini_project_1/docs/gui_search.PNG">
+
+When a user enters just the product, a dialog must be displayed letting the user know that better results could be displayed with a username entered.
+
+<img src="https://github.com/djtrinh/EC601/blob/master/mini_project_1/docs/notice.PNG">
+
+All GUI elements must be functional. The user should not be able to break the program at anytime. Therefore, I spent a good amount of time being a monkey to try and break the program.
+
+<img src="https://github.com/djtrinh/EC601/blob/master/mini_project_1/docs/about.PNG">
+
+# Lessons Learned
+
+With this project, I have learned that are tons of information out there. As a result of this there is a ton of bad information as well. Filtering out this information is key to getting accurate results. Creating the GUI is both fun and frustrating at the same time. NLP was where all the fun really happened but there were too many limits with the free Twitter developer account.
+
+What I could have done better was actually have someone look into a database for this project. As a one man team, creating a GUI, integrating both Google Natural Language and Twitter APIs along with data preprocessing, there was a mountain of work to be done with so little time. I also wanted to create a better spam filter. This would require machine learning to predict whether or not the tweet is spam instead of removing tweets based off spam keywords. Also, instead of discarding tweets with images, I want to do image processing to further improve tweet and sentiment score results.
 
 In the future, I will modularize my code better. It has to start from the beginning and that includes good directory structures, code skeletans, etc.
