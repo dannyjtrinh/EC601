@@ -3,8 +3,10 @@ from ui import *
 
 
 def main():
-    keys = sys.argv[1]
-    gui = ui(keys)
-    
+    app = QApplication(sys.argv)
+    gui = ui()
+    gui.show()
+    sys.exit(app.exec_())
+
     
 main()
