@@ -92,3 +92,5 @@ What I could have done better was actually have someone look into a database for
 In the future, I will modularize my code better. It has to start from the beginning and that includes good directory structures, code skeletans, etc.
 
 MVP: Coffee
+
+UPDATE: From mini project 3, MongoDB and MySQL has been implemented into the project.
