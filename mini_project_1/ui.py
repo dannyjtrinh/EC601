@@ -1,5 +1,8 @@
 import sys
 import os
+import mongodb
+import sql
+
 from twitter_api import *
 from google_api import *
 from PyQt4.QtGui import *
@@ -9,6 +12,10 @@ from PyQt4.QtCore import *
 class ui(QMainWindow):
 
     def __init__(self, parent=None):
+        # create pymongo db
+        self.mongodb = mongodb.mongodb()
+        self.sql = sql.mysql_class()
+        
         QMainWindow.__init__(self)
         self.thread = AThread(self.analysis_cmds)
         
@@ -169,7 +176,8 @@ class ui(QMainWindow):
             tweet_sentence_block = \
                 self.twitter_scrapper.search_twitter(username, product)
             
-            score, top_tweets = analyze(tweet_sentence_block)
+            score, top_tweets = analyze(username, product, tweet_sentence_block,
+                                        self.mongodb, self.sql)
 
             results_string = "Top Tweets\n\n"+top_tweets[0][1]+"\n\n"+\
                 top_tweets[1][1]+"\n\n"+\

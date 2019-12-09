@@ -3,7 +3,7 @@ from google.cloud import language
 from google.cloud.language import enums
 
 
-def analyze(sentence_list):
+def analyze(username, product, sentence_list, db, sql):
     score_list = []
     neg_list = []
     pos_list = []
@@ -13,7 +13,7 @@ def analyze(sentence_list):
     for i in sentence_list:
         if(i.count("https://") == 1):
             url = i.find("https")
-            #print(i+"\n\n")
+        #print(i+"\n\n")
             tweet = i[:url-1].strip()
             url_link = i[url:].strip()
             if(len(url_link.split()) == 1):
@@ -48,6 +48,10 @@ def analyze(sentence_list):
                 neg_list.append(score)
             else:
                 pos_list.append(score)
+
+            db.insert_tweet([username, product, tweet[0], score])
+            sql.insert_tweet([username, product, tweet[0], score])
+            
         
     # Get overall sentiment of the input document
     #print(u"Document sentiment score: {}".format(response.document_sentiment.score))
